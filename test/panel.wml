@@ -1,0 +1,101 @@
+{% import * as tab from "@extra/tab" %}
+
+{% import (normalize) from "classname" %}
+
+{% import (truncate as trunc) from "string" %}
+
+{% import (Panel, Header, Body Footer) from "panel" %}
+
+{% import (TextField as Text, textValue) from "text-field" %}
+
+{% import (Context) from  "../" %}
+
+{% fun lastTab[A, B:A, C:GenericString[B]] (x:String, y:GenericString[B], z:C) %}
+  
+  {% if true == true %}
+
+    <div class="tab-wrapper">
+
+      {{ x + 'Tab: ' }}
+
+        <button 
+          id={{y + 'tab' | trunc(10)}}
+          type="button" 
+          tabindex=-1 />
+
+        <div class="tab">
+
+          {{ z | text | trunc(100) }}
+
+          <b>23</b>
+
+        </div>
+
+    </div>
+
+  {% else %}
+
+    {{<NoContent/>}}
+
+  {% endif %}
+
+{% endfun %}
+
+<!-- This example may not be 100% syntatically correct! -->
+
+{% view Example [A, B:A, C:GenericString[B]] (Context[A,B,C]) %}
+
+<Panel class={{ @className | normalize | trunc(20) }}>
+
+  {% if @header != null %}
+
+    <Header>
+
+      <!-- These are here because we had an issue with the 
+        wmlCharacters region
+      -->
+      <Title> {{'foo'}}</Title> <Title/> <Title/> <Title/> <Title/>
+      <Title> </Title>
+      <Title>A Complicated Example</Title>
+
+      <Title> T</Title> <Title/> <Title/> <Title/> <Title/>
+
+      <tabs.TabBar data={{[1,2,3]}}>
+
+        {% for t in @getTabs() %}
+
+          <tab.Tab
+            tab:value={{t}}
+            tab:onClick={{ \a,b:String,c:Number->(window.location = t.href) }} />
+
+        {% else %}
+
+          <div/>
+
+        {% endfor %}
+
+        {% if @additionalTabs != null %}
+
+          {{ <(@additionalTabs)> }}
+
+        {% else if addtionalTabs != null %}
+
+          {{ <additionalTabs(@)> }}
+
+        {% else %}
+
+          {{ <NoTab(@)> }}
+
+        {% endif %}
+
+      </TabBar>
+
+    </Header>
+
+  {% endif %}
+
+  <Body>
+
+  </Body>
+
+</Panel>
