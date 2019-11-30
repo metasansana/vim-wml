@@ -212,7 +212,7 @@ syntax region wmlCharacters
       \ contained 
 
 syntax region wmlHTMLTagStart
-      \ start="\v\<[a-z][a-z-]*(\.)@!"
+      \ start="\v\<[a-z][a-z0-9-]*(\.)@!"
       \ end="\v/\>"
       \ end="\v\>"
       \ contains=wmlAttribute
@@ -239,7 +239,7 @@ syntax region wmlAttributeNS
 syntax cluster wmlAttributeValue 
       \ contains=wmlString,wmlNumber,wmlBoolean,wmlAttributeInterpolation
 
-syntax match wmlHTMLTagEnd "\v\</[a-z][a-z-]*\>" 
+syntax match wmlHTMLTagEnd "\v\</[a-z][a-z0-9-]*\>" 
       \ nextgroup=@wmlChildren,@wmlEnd
       \ skipwhite
       \ skipempty
